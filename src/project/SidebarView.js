@@ -90,6 +90,7 @@ define(function (require, exports, module) {
      * Show the sidebar.
      */
     function show() {
+	$sidebar.width(176); 
         Resizer.show($sidebar);
     }
 
