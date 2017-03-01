@@ -54,12 +54,11 @@ define(function (require, exports, module) {
         $projectTitle,
         $projectFilesContainer,
         $workingSetViewsContainer;
-
     var _cmdSplitNone,
         _cmdSplitVertical,
         _cmdSplitHorizontal;
-
-    /**
+    var MinimumSidebarWidth = 200 ; 
+     /**
      * @private
      * Update project title when the project root changes
      */
@@ -90,8 +89,8 @@ define(function (require, exports, module) {
      * Show the sidebar.
      */
     function show() {
-	$sidebar.width(200); 
-
+	$sidebar.width(MinimumSidebarWidth); 
+	
         Resizer.show($sidebar);
     }
 
