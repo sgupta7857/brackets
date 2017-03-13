@@ -59,7 +59,7 @@ define(function (require, exports, module) {
         _cmdSplitHorizontal;
     var MinimumSidebarWidthPX = 200;
 
-     /**
+    /**
      * @private
      * Update project title when the project root changes
      */
@@ -90,7 +90,7 @@ define(function (require, exports, module) {
      * Show the sidebar.
      */
     function show() {
-        // XXXBramble: don't allow the sidebar to open at less than our minimin width
+        // XXXBramble: don't allow the sidebar to open at less than our minimum width
         if($sidebar.width() < MinimumSidebarWidthPX){
             $sidebar.width(MinimumSidebarWidthPX); 
         }
