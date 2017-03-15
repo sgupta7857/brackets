@@ -117,7 +117,9 @@ define(function (require, exports, module) {
     exports.CMD_ADD_TO_WORKINGSET_AND_OPEN  = "cmd.addToWorkingSetAndOpen";          // DocumentCommandHandlers.js   handleOpenDocumentInNewPane()
 
     // NAVIGATE
-    exports.NAVIGATE_PREV_DOC           = "navigate.prevDoc";           // DocumentCommandHandlers.js   handleGoPrevDoc()
+        exports.NAVIGATE_NEXT_DOC ;// DocumentCommandHandlers.js   handleGoNextDoc()
+
+	exports.NAVIGATE_PREV_DOC ;// DocumentCommandHandlers.js   handleGoPrevDoc()
     exports.NAVIGATE_NEXT_DOC_LIST_ORDER    = "navigate.nextDocListOrder";           // DocumentCommandHandlers.js   handleGoNextDocListOrder()
     exports.NAVIGATE_PREV_DOC_LIST_ORDER    = "navigate.prevDocListOrder";           // DocumentCommandHandlers.js   handleGoPrevDocListOrder()
     exports.NAVIGATE_SHOW_IN_FILE_TREE  = "navigate.showInFileTree";    // DocumentCommandHandlers.js   handleShowInTree()
