@@ -260,25 +260,6 @@
             "platform": "mac"
         }
     ],
-    "navigate.nextDocListOrder":  [
-        {
-            "key": "Ctrl-PageDown"
-        }, 
-        {
-            "key": "Cmd-Shift-8",
-            "platform": "mac"
-        }
-
-    ],
-    "navigate.prevDocListOrder":  [
-        {
-            "key": "Ctrl-PageUp"
-        },
-        {
-            "key": "Cmd-Shift-9",
-            "platform": "mac"
-        }
-    ],
     "navigate.toggleQuickEdit":  [
         {
             "key": "Alt-E"
