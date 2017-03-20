@@ -186,7 +186,7 @@
     "view.toggleSidebar":  [
         {   
             "key" : "Ctrl-Alt-H"
-        }, 
+        },
         {
             "key": "Cmd-Shift-H",
             "platform": "mac"
