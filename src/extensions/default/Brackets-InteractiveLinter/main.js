@@ -21,31 +21,20 @@ define(function (require, exports, module) {
         linterManager      = require("linterManager"),
         pluginManager      = require("pluginManager");
 
-        var preferencesID = "interactive-linter";
         
         var defaultPreferences = { 
-        delay: 500,
-        enabled: false,
-        webworker: true,
-        javascript: "eslint" 
+            "enabled": false,
+            "javascript" : ["eslint"] 
         };
 
         function loadPreferences(){
-            _preferences = PreferencesManager.getExtensionPrefs(preferencesID);
-            _preferences.definePreferences("enabled", "boolean", defaultPreferences.disable);
-            _preferences.definePreferences("delay", "int", defaultPreferences.delay); 
-            _preferences.definePreferences("webworker", "boolean", defaultPreferences.webworker);
-            _preferences.definePreferences("javascript", "string", defaultPreferences.javascript); 
+            console.log("load-pref");
+            preferences.definePreference("enabled", "boolean", defaultPreferences.enabled);
+            preferences.definePreference("javascript", "array", defaultPreferences.javascript); 
+            
+            preferences.save(); 
         }
-
-
-
-
-
-
-
-        
-
+    
     require("lintIndicator");
     require("lintPanel");
     require("linterSettings");
@@ -158,6 +147,10 @@ define(function (require, exports, module) {
      * interactive linter registered on.
      */
     function setDocument(evt, currentEditor, previousEditor) {
+        if(!preferences.get("enabled")){
+            console.log("ignoring lint");
+            return ; 
+        }
         if (previousEditor) {
             deactivateEditor(previousEditor);
         }
@@ -170,6 +163,7 @@ define(function (require, exports, module) {
             addGutter(currentEditor);
             handleDocumentChange();
         }
+
     }
 
 
@@ -177,8 +171,7 @@ define(function (require, exports, module) {
      * Function that gets called when Brackets is loaded and ready
      */
     function appReady() {
-
-        loadPreferences();
+        loadPreferences(); 
         // Removes the default Brackets JSLint linter
         CodeInspection.register("javascript", {
             name: "interactive-linter-remove-jslint",
