@@ -28,10 +28,8 @@ define(function (require, exports, module) {
         };
 
         function loadPreferences(){
-            console.log("load-pref");
             preferences.definePreference("enabled", "boolean", defaultPreferences.enabled);
             preferences.definePreference("javascript", "array", defaultPreferences.javascript); 
-            
             preferences.save(); 
         }
     
@@ -148,7 +146,6 @@ define(function (require, exports, module) {
      */
     function setDocument(evt, currentEditor, previousEditor) {
         if(!preferences.get("enabled")){
-            console.log("ignoring lint");
             return ; 
         }
         if (previousEditor) {
