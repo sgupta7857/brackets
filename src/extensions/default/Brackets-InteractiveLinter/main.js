@@ -20,12 +20,11 @@ define(function (require, exports, module) {
         preferences        = PreferencesManager.getExtensionPrefs("interactive-linter"),
         linterManager      = require("linterManager"),
         pluginManager      = require("pluginManager");
-
         
-        var defaultPreferences = { 
-            "enabled": false,
-            "javascript" : ["eslint"] 
-        };
+	var defaultPreferences = { 
+    	"enabled": false,
+    	"javascript" : ["eslint"] 
+    };
 
         function loadPreferences(){
             preferences.definePreference("enabled", "boolean", defaultPreferences.enabled);
@@ -146,8 +145,9 @@ define(function (require, exports, module) {
      */
     function setDocument(evt, currentEditor, previousEditor) {
         if(!preferences.get("enabled")){
-            return ; 
+            return; 
         }
+
         if (previousEditor) {
             deactivateEditor(previousEditor);
         }
@@ -160,17 +160,11 @@ define(function (require, exports, module) {
             addGutter(currentEditor);
             handleDocumentChange();
         }
+	}
 
-    }
-
-
-    /**
-     * Function that gets called when Brackets is loaded and ready
-     */
-    function appReady() {
-        loadPreferences(); 
-        // Removes the default Brackets JSLint linter
-        CodeInspection.register("javascript", {
+    
+	function init(){
+		CodeInspection.register("javascript", {
             name: "interactive-linter-remove-jslint",
             scanFile: $.noop
         });
@@ -203,5 +197,23 @@ define(function (require, exports, module) {
             });
 
         });
+	}
+	
+    /**
+     * Function that gets called when Brackets is loaded and ready
+     */
+    function appReady() {
+        loadPreferences(); 
+        preferences.set("enabled", true); 
+        if(preferences.get("enabled")){
+            init();
+        } else{
+            preferences.on("change", function handleChange(){
+                if(preferences.get("enabled"){
+                    preferences.off("change", handleChange); 
+                    init();
+                }
+            });
+        }
     }
 });
