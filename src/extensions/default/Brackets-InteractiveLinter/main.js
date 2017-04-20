@@ -21,17 +21,10 @@ define(function (require, exports, module) {
         linterManager      = require("linterManager"),
         pluginManager      = require("pluginManager");
         
-	var defaultPreferences = { 
-    	"enabled": false,
-    	"javascript" : ["eslint"] 
-    };
+	function addEnabledPref() {
+        preferences.definePreference("enabled", "boolean", true);
+    }
 
-        function loadPreferences(){
-            preferences.definePreference("enabled", "boolean", defaultPreferences.enabled);
-            preferences.definePreference("javascript", "array", defaultPreferences.javascript); 
-            preferences.save(); 
-        }
-    
     require("lintIndicator");
     require("lintPanel");
     require("linterSettings");
@@ -198,18 +191,16 @@ define(function (require, exports, module) {
 
         });
 	}
-	
-    /**
-     * Function that gets called when Brackets is loaded and ready
-     */
+
+
     function appReady() {
-        loadPreferences(); 
-        preferences.set("enabled", true); 
-        if(preferences.get("enabled")){
+        addEnabledPref()    
+        if (preferences.get("enabled")) {
             init();
-        } else{
+        } 
+        else {
             preferences.on("change", function handleChange(){
-                if(preferences.get("enabled"){
+                if(preferences.get("enabled")) {
                     preferences.off("change", handleChange); 
                     init();
                 }
