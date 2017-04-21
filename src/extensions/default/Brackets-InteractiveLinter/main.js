@@ -21,11 +21,7 @@ define(function (require, exports, module) {
         linterManager      = require("linterManager"),
         pluginManager      = require("pluginManager");
         
-	function addEnabledPref() {
-        preferences.definePreference("enabled", "boolean", true);
-    }
-
-    require("lintIndicator");
+	require("lintIndicator");
     require("lintPanel");
     require("linterSettings");
 
@@ -157,7 +153,7 @@ define(function (require, exports, module) {
 
     
 	function init(){
-		CodeInspection.register("javascript", {
+	    CodeInspection.register("javascript", {
             name: "interactive-linter-remove-jslint",
             scanFile: $.noop
         });
@@ -194,17 +190,16 @@ define(function (require, exports, module) {
 
 
     function appReady() {
-        addEnabledPref()    
+        preferences.definePreference("enabled", "boolean", true);
         if (preferences.get("enabled")) {
             init();
-        } 
-        else {
+        } else {
             preferences.on("change", function handleChange(){
                 if(preferences.get("enabled")) {
                     preferences.off("change", handleChange); 
                     init();
                 }
-            });
+          });
         }
     }
 });
