@@ -205,6 +205,7 @@ define([
         self.getRootDir = function() { return _root; };
         self.getWordWrap = function() { return _state.wordWrap; };
         self.getAllowJavaScript = function() { return _state.allowJavaScript; };
+        self.getAllowLint = function() { return _state.allowLint; };
         self.getAutoUpdate = function() { return _state.autoUpdate; };
         self.getTutorialExists = function() { return _tutorialExists; };
         self.getTutorialVisible = function() { return _tutorialVisible; };
@@ -265,6 +266,7 @@ define([
                     _state.theme = data.theme;
                     _state.wordWrap = data.wordWrap;
                     _state.allowJavaScript = data.allowJavaScript;
+                    _state.allowLint = data.allowLint
                     _state.autoUpdate = data.autoUpdate;
 
                     setReadyState(Bramble.READY);
@@ -303,7 +305,9 @@ define([
                         _state.wordWrap = data.wordWrap;
                     } else if (eventName === "allowJavaScriptChange") {
                         _state.allowJavaScript = data.allowJavaScript;
-                    } else if (eventName === "tutorialVisibilityChange") {
+                    } else if (eventName == "allowLintChange"){
+                        _state.allowLint = data.allowLint ;
+                    }else if (eventName === "tutorialVisibilityChange") {
                         _tutorialVisible = data.visible;
                     } else if (eventName === "autoUpdateChange") {
                         _state.autoUpdate = data.autoUpdate;
@@ -422,6 +426,7 @@ define([
                                     previewMode: _state.previewMode,
                                     wordWrap: _state.wordWrap,
                                     allowJavaScript: _state.allowJavaScript,
+                                    allowLint = _state.allowLint,
                                     autoUpdate: _state.autoUpdate
                                 }
                             };
@@ -903,6 +908,13 @@ define([
     BrambleProxy.prototype.disableJavaScript = function(callback) {
         this._executeRemoteCommand({commandCategory: "bramble", command: "BRAMBLE_DISABLE_SCRIPTS"}, callback);
     };
+    BrambleProxy.prototype.enableLint = function(callback) {
+        this._executeRemoteCommand({commandCategory: "bramble", command: "BRAMBLE_ENABLE_LINT"}, callback);
+    };
+
+    BrambleProxy.prototype.disableLint = function(callback) {
+        this._executeRemoteCommand({commandCategory: "bramble", command: "BRAMBLE_DISABLE_Lint"}, callback);
+    };
 
     BrambleProxy.prototype.enableInspector = function(callback) {
         this._executeRemoteCommand({commandCategory: "bramble", command: "BRAMBLE_ENABLE_INSPECTOR"}, callback);
@@ -953,7 +965,7 @@ define([
     BrambleProxy.prototype.export = function(callback) {
         this._executeRemoteCommand({commandCategory: "bramble", command: "BRAMBLE_EXPORT"}, callback);
     };
-	
+
     BrambleProxy.prototype.addCodeSnippet = function(options, callback) {
         this._executeRemoteCommand({
             commandCategory: "bramble",

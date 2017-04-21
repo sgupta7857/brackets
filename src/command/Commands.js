@@ -111,6 +111,7 @@ define(function (require, exports, module) {
     exports.TOGGLE_ACTIVE_LINE          = "view.toggleActiveLine";      // EditorOptionHandlers.js      _getToggler()
     exports.TOGGLE_WORD_WRAP            = "view.toggleWordWrap";        // EditorOptionHandlers.js      _getToggler()
     exports.TOGGLE_ALLOW_JAVASCRIPT     = "cmd.toggleAllowJavaScript";  // EditorOptionsHandlers.js     _getToggler()
+    exports.TOGGLE_ALLOW_LINT           = "cmd.toggleAllowLint";  // EditorOptionsHandlers.js     _getToggler()
     exports.TOGGLE_AUTO_UPDATE          = "cmd.toggleAutoUpdate";       // EditorOptionsHandlers.js     _getToggler()
 
     exports.CMD_OPEN                        = "cmd.open";
@@ -181,4 +182,3 @@ define(function (require, exports, module) {
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_TYPE",    "CMD_WORKINGSET_SORT_BY_TYPE");
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_AUTO",       "CMD_WORKING_SORT_TOGGLE_AUTO");
 });
-

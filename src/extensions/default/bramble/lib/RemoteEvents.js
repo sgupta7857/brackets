@@ -125,12 +125,20 @@ define(function (require, exports, module) {
                 wordWrap: PreferencesManager.get("wordWrap")
             });
         });
-        
+
         // Listen for changes to allow javascript
         PreferencesManager.on("change", "allowJavaScript", function () {
             sendEvent({
                 type: "bramble:allowJavaScriptChange",
                 allowJavaScript: PreferencesManager.get("allowJavaScript")
+            });
+        });
+        // Listen for changes to allow javascript
+        var Lint = PreferencesManager.getExtensionPrefs("interactive-linter");
+        Lint.on("change", "allowLint", function () {
+            sendEvent({
+                type: "bramble:allowLintChange",
+                allowLint: PreferencesManager.get("enabled")
             });
         });
 
@@ -174,6 +182,7 @@ define(function (require, exports, module) {
             theme: Theme.getTheme(),
             wordWrap: PreferencesManager.get("wordWrap"),
             allowJavaScript: PreferencesManager.get("allowJavaScript"),
+            allowLint: PreferencesManager.getExtensionPrefs("interactive-linter").get("enabled"),
             autoUpdate: PreferencesManager.get("autoUpdate")
         });
     }
