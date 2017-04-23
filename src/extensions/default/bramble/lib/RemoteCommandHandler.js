@@ -99,6 +99,14 @@ define(function (require, exports, module) {
             PreferencesManager.set("allowJavaScript", false);
             PostMessageTransport.reload();
             break;
+        case "BRAMBLE_ENABLE_LINT":
+            PreferencesManager.set("allowLint", true);
+            PostMessageTransport.reload();
+            break;
+        case "BRAMBLE_DISABLE_LINT":
+            PreferencesManager.set("allowLint", false);
+            PostMessageTransport.reload();
+            break;
         case "BRAMBLE_ENABLE_INSPECTOR":
             MouseManager.enableInspector();
             break;
