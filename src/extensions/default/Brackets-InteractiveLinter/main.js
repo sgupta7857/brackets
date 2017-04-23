@@ -21,7 +21,7 @@ define(function (require, exports, module) {
         linterManager      = require("linterManager"),
         pluginManager      = require("pluginManager");
 
-	  require("lintIndicator");
+    require("lintIndicator");
     require("lintPanel");
     require("linterSettings");
 
@@ -133,10 +133,6 @@ define(function (require, exports, module) {
      * interactive linter registered on.
      */
     function setDocument(evt, currentEditor, previousEditor) {
-        if(!preferences.get("enabled")){
-            return;
-        }
-
         if (previousEditor) {
             deactivateEditor(previousEditor);
         }
@@ -149,56 +145,62 @@ define(function (require, exports, module) {
             addGutter(currentEditor);
             handleDocumentChange();
         }
-	}
+    }
 
 
-  function init() {
-      CodeInspection.register("javascript", {
-          name: "interactive-linter-remove-jslint",
-          scanFile: $.noop
-      });
+    /**
+     * Function that gets called when Brackets is loaded and ready
+     */
+    function init() {
+        // Removes the default Brackets JSLint linter
+        CodeInspection.register("javascript", {
+            name: "interactive-linter-remove-jslint",
+            scanFile: $.noop
+        });
 
-      // Load up plugins and wait til they are done loading before we
-      // register any handlers into Brackets
-      pluginManager().done(function(plugins) {
-          for (var iPlugin in plugins) {
-              linterManager.registerLinter(plugins[iPlugin]);
-          }
+        // Load up plugins and wait til they are done loading before we
+        // register any handlers into Brackets
+        pluginManager().done(function(plugins) {
+            for (var iPlugin in plugins) {
+                linterManager.registerLinter(plugins[iPlugin]);
+            }
 
-          EditorManager.on("activeEditorChange.interactive-linter", setDocument);
-          setDocument(null, EditorManager.getActiveEditor());
+            EditorManager.on("activeEditorChange.interactive-linter", setDocument);
+            setDocument(null, EditorManager.getActiveEditor());
 
-          // If the linters change, then make sure to rebind the document with the new linter
-          var lastLinters;
-          preferences.on("change", function() {
-              var editor = EditorManager.getActiveEditor();
-              if (!editor) {
-                  return;
-              }
+            // If the linters change, then make sure to rebind the document with the new linter
+            var lastLinters;
+            preferences.on("change", function() {
+                var editor = EditorManager.getActiveEditor();
+                if (!editor) {
+                    return;
+                }
 
-              var language = editor.document.getLanguage().getId();
-              var linters = preferences.get(language);
+                var language = editor.document.getLanguage().getId();
+                var linters  = preferences.get(language);
 
-              if (linters && !_.isEqual(linters, lastLinters)) {
-                  lastLinters = linters.slice(0);
-                  handleDocumentChange();
-              }
-          });
-      });
-  }
+                if (linters && !_.isEqual(linters, lastLinters)) {
+                    lastLinters = linters.slice(0);
+                    handleDocumentChange();
+                }
+            });
+
+        });
+    }
 
 
     function appReady() {
-        preferences.definePreference("enabled", "boolean", true);
-        if (preferences.get("enabled")) {
-            init();
-        } else {
-            preferences.on("change", function handleChange(){
-                if(preferences.get("enabled")) {
-                    preferences.off("change", handleChange);
-                    init();
-                }
-            });
+      preferences.definePreference("enabled", "boolean", true); 
+      if (preferences.get("enabled")) {
+        init();
+      } else {
+        preferences.on("change", function handleChange() {
+          if (preferences.get("enabled")) {
+            preferences.off("change", handleChange);
+            init() ; 
           }
+        });
+      }
     }
+    
 });
